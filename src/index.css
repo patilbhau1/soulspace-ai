@@ -2,6 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* Serene Color Palette */
+    --background: 220 15% 97%;
+    --foreground: 220 10% 15%;
+    --card: 220 50% 98%;
+    --card-foreground: 220 10% 15%;
+    --popover: 220 50% 98%;
+    --popover-foreground: 220 10% 15%;
+    
+    /* Primary - Soft Sage Green */
+    --primary: 150 25% 65%;
+    --primary-foreground: 150 10% 25%;
+    --primary-glow: 150 35% 75%;
+    
+    /* Secondary - Warm Lavender */
+    --secondary: 260 20% 80%;
+    --secondary-foreground: 260 15% 35%;
+    
+    /* Accent - Gentle Sky Blue */
+    --accent: 200 30% 85%;
+    --accent-foreground: 200 15% 35%;
+    
+    /* Therapeutic Gradients */
+    --gradient-soul: linear-gradient(135deg, hsl(150 25% 65% / 0.1), hsl(260 20% 80% / 0.1));
+    --gradient-healing: linear-gradient(180deg, hsl(200 30% 95%), hsl(150 25% 95%));
+    --gradient-peace: radial-gradient(circle at center, hsl(150 25% 65% / 0.05), transparent 70%);
+    
+    /* Soft Shadows */
+    --shadow-gentle: 0 4px 20px hsl(150 25% 65% / 0.1);
+    --shadow-embrace: 0 8px 40px hsl(260 20% 80% / 0.15);
+    --shadow-float: 0 2px 12px hsl(200 30% 85% / 0.2);
+    
+    /* Borders */
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 150 25% 65%;
+    
+    /* States */
+    --muted: 220 15% 95%;
+    --muted-foreground: 220 10% 45%;
+    --destructive: 0 60% 70%;
+    --destructive-foreground: 0 20% 25%;
+    
+    /* Transitions */
+    --transition-soul: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-breath: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .dark {
+    --background: 220 15% 8%;
+    --foreground: 220 10% 90%;
+    --card: 220 15% 10%;
+    --card-foreground: 220 10% 90%;
+    --popover: 220 15% 10%;
+    --popover-foreground: 220 10% 90%;
+    
+    --primary: 150 25% 55%;
+    --primary-foreground: 150 10% 90%;
+    --primary-glow: 150 35% 65%;
+    
+    --secondary: 260 20% 25%;
+    --secondary-foreground: 260 15% 85%;
+    
+    --accent: 200 30% 20%;
+    --accent-foreground: 200 15% 85%;
+    
+    --gradient-soul: linear-gradient(135deg, hsl(150 25% 55% / 0.15), hsl(260 20% 25% / 0.15));
+    --gradient-healing: linear-gradient(180deg, hsl(220 15% 12%), hsl(150 25% 10%));
+    --gradient-peace: radial-gradient(circle at center, hsl(150 25% 55% / 0.08), transparent 70%);
+    
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background: var(--gradient-healing);
+    min-height: 100vh;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .soul-container {
+    @apply relative overflow-hidden;
+    background: var(--gradient-soul);
+  }
+  
+  .soul-container::before {
+    content: '';
+    @apply absolute inset-0 pointer-events-none;
+    background: var(--gradient-peace);
+    animation: breathe 8s ease-in-out infinite;
+  }
+  
+  .healing-card {
+    @apply bg-card/60 backdrop-blur-sm border border-border/50 rounded-2xl p-6;
+    box-shadow: var(--shadow-embrace);
+    transition: var(--transition-soul);
+  }
+  
+  .healing-card:hover {
+    @apply scale-[1.02];
+    box-shadow: var(--shadow-gentle);
+  }
+  
+  .soul-text {
+    @apply text-foreground/90 leading-relaxed;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .whisper-animation {
+    animation: whisper 3s ease-in-out infinite;
+  }
+  
+  .float-gentle {
+    animation: float-gentle 6s ease-in-out infinite;
+  }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes whisper {
+  0%, 100% { opacity: 0.7; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(1deg); }
+  66% { transform: translateY(-5px) rotate(-1deg); }
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
