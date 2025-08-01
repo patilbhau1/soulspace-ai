@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import Navigation from "./Navigation";
 import { Mic, MessageCircle, Heart, Sparkles } from "lucide-react";
 
 const spiritualQuotes = [
