@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Navigation from "./Navigation";
+import Navigation from "@/components/Navigation";
 import { Mic, MessageCircle, Heart, Sparkles } from "lucide-react";
 
 const spiritualQuotes = [
@@ -34,7 +34,9 @@ export const SoulspaceWelcome = () => {
   };
 
   return (
-    <div className="min-h-screen soul-container flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen soul-container">
+      <Navigation />
+      <div className="flex flex-col items-center justify-center p-6 pt-24">
       {/* Floating Particles Background */}
       <div className="fixed inset-0 pointer-events-none">
         {[...Array(6)].map((_, i) => (
@@ -161,6 +163,7 @@ export const SoulspaceWelcome = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };
