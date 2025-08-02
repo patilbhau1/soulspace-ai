@@ -72,20 +72,6 @@ export const SoulspaceWelcome = () => {
           </p>
         </div>
 
-        {/* Spiritual Quote Carousel */}
-        <Card className="healing-card max-w-4xl mx-auto transform hover:scale-105 transition-transform duration-300">
-          <div className="relative h-32 flex items-center justify-center">
-            <Sparkles className="absolute left-6 top-6 w-6 h-6 text-primary/60 whisper-animation" />
-            <p 
-              key={currentQuote}
-              className="soul-text text-xl md:text-2xl italic px-16 animate-fade-in"
-            >
-              {spiritualQuotes[currentQuote]}
-            </p>
-            <Sparkles className="absolute right-6 bottom-6 w-6 h-6 text-secondary/60 whisper-animation" style={{animationDelay: "1s"}} />
-          </div>
-        </Card>
-
         {/* Interactive Emotion Meter - Central Focus */}
         <Card className="healing-card max-w-lg mx-auto transform hover:scale-105 transition-all duration-300 ring-2 ring-primary/20 hover:ring-primary/40">
           <div className="space-y-6 p-2">
@@ -140,6 +126,46 @@ export const SoulspaceWelcome = () => {
             </div>
           </div>
         </Card>
+
+        {/* Spiritual Quote Carousel */}
+        <Card className="healing-card max-w-4xl mx-auto transform hover:scale-105 transition-transform duration-300">
+          <div className="relative h-32 flex items-center justify-center">
+            <Sparkles className="absolute left-6 top-6 w-6 h-6 text-primary/60 whisper-animation" />
+            <p 
+              key={currentQuote}
+              className="soul-text text-xl md:text-2xl italic px-16 animate-fade-in"
+            >
+              {spiritualQuotes[currentQuote]}
+            </p>
+            <Sparkles className="absolute right-6 bottom-6 w-6 h-6 text-secondary/60 whisper-animation" style={{animationDelay: "1s"}} />
+          </div>
+        </Card>
+      </div>
+
+      {/* Secondary Section - Call and Chat Options */}
+      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8 py-16">
+        <h2 className="text-3xl font-light soul-text mb-8">Ready for deeper support?</h2>
+        <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+          <Card className="healing-card group cursor-pointer transform hover:scale-105 transition-all duration-300">
+            <div className="p-8 space-y-4" onClick={handleVoiceCall}>
+              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto group-hover:bg-primary/30 transition-colors duration-300">
+                <Mic className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-xl font-medium soul-text">Voice Call</h3>
+              <p className="soul-text opacity-70">Talk with our AI therapist using your voice</p>
+            </div>
+          </Card>
+          
+          <Card className="healing-card group cursor-pointer transform hover:scale-105 transition-all duration-300">
+            <div className="p-8 space-y-4" onClick={handleChat}>
+              <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto group-hover:bg-secondary/30 transition-colors duration-300">
+                <MessageCircle className="w-8 h-8 text-secondary" />
+              </div>
+              <h3 className="text-xl font-medium soul-text">Chat Session</h3>
+              <p className="soul-text opacity-70">Start a text conversation with our AI therapist</p>
+            </div>
+          </Card>
+        </div>
       </div>
 
       {/* Personal Footer */}
