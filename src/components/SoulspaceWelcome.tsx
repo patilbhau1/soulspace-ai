@@ -39,59 +39,62 @@ export const SoulspaceWelcome = () => {
   return (
     <div className="min-h-screen soul-container">
       <Navigation />
-      <div className="flex flex-col items-center justify-center p-6 pt-24">
+      <div className="flex flex-col items-center justify-center p-6 pt-24 min-h-screen">
       {/* Floating Particles Background */}
       <div className="fixed inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full float-gentle"
+            className="absolute w-3 h-3 bg-primary/30 rounded-full float-gentle"
             style={{
-              left: `${20 + i * 15}%`,
-              top: `${30 + (i % 3) * 20}%`,
-              animationDelay: `${i * 1.2}s`,
+              left: `${15 + i * 12}%`,
+              top: `${25 + (i % 4) * 18}%`,
+              animationDelay: `${i * 1.5}s`,
             }}
           />
         ))}
       </div>
 
       {/* Main Welcome Content */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-12">
+      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-16 flex-1 flex flex-col justify-center">
         {/* Logo/Branding */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-center space-x-3 mb-6">
-            <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center whisper-animation">
-              <Heart className="w-6 h-6 text-primary" />
+        <div className="space-y-6">
+          <div className="flex items-center justify-center space-x-3 mb-8">
+            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center whisper-animation">
+              <Heart className="w-8 h-8 text-primary" />
             </div>
-            <h1 className="text-4xl md:text-6xl font-light text-foreground tracking-wide">
+            <h1 className="text-5xl md:text-7xl font-light text-foreground tracking-wide">
               Soul<span className="text-primary font-medium">Space</span>
             </h1>
           </div>
-          <p className="text-xl md:text-2xl soul-text font-light opacity-80 max-w-2xl mx-auto">
+          <p className="text-2xl md:text-3xl soul-text font-light opacity-80 max-w-3xl mx-auto">
             Your sanctuary for healing, wisdom, and spiritual guidance through AI-powered support
           </p>
         </div>
 
         {/* Spiritual Quote Carousel */}
-        <Card className="healing-card max-w-3xl mx-auto">
-          <div className="relative h-24 flex items-center justify-center">
-            <Sparkles className="absolute left-4 top-4 w-5 h-5 text-primary/60 whisper-animation" />
+        <Card className="healing-card max-w-4xl mx-auto transform hover:scale-105 transition-transform duration-300">
+          <div className="relative h-32 flex items-center justify-center">
+            <Sparkles className="absolute left-6 top-6 w-6 h-6 text-primary/60 whisper-animation" />
             <p 
               key={currentQuote}
-              className="soul-text text-lg md:text-xl italic px-12 animate-fade-in"
+              className="soul-text text-xl md:text-2xl italic px-16 animate-fade-in"
             >
               {spiritualQuotes[currentQuote]}
             </p>
-            <Sparkles className="absolute right-4 bottom-4 w-5 h-5 text-secondary/60 whisper-animation" style={{animationDelay: "1s"}} />
+            <Sparkles className="absolute right-6 bottom-6 w-6 h-6 text-secondary/60 whisper-animation" style={{animationDelay: "1s"}} />
           </div>
         </Card>
 
-        {/* Interactive Voice Emotion Meter */}
-        <Card className="healing-card max-w-md mx-auto">
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium soul-text">How are you feeling right now?</h3>
-            <div className="space-y-3">
-              <div className="relative">
+        {/* Interactive Emotion Meter - Central Focus */}
+        <Card className="healing-card max-w-lg mx-auto transform hover:scale-105 transition-all duration-300 ring-2 ring-primary/20 hover:ring-primary/40">
+          <div className="space-y-6 p-2">
+            <div className="text-center space-y-2">
+              <h3 className="text-2xl font-medium soul-text">How are you feeling right now?</h3>
+              <p className="soul-text opacity-70">Move the slider to express your current mood</p>
+            </div>
+            <div className="space-y-4">
+              <div className="relative p-2">
                 <input
                   type="range"
                   min="0"
@@ -101,87 +104,61 @@ export const SoulspaceWelcome = () => {
                     setEmotionLevel(Number(e.target.value));
                     setSliderTouched(true);
                   }}
-                  className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer emotion-slider"
+                  className="w-full h-4 bg-muted rounded-lg appearance-none cursor-pointer emotion-slider transform hover:scale-105 transition-transform duration-200"
                   style={{
                     background: `linear-gradient(to right, hsl(0 60% 70%) 0%, hsl(45 70% 70%) 50%, hsl(150 25% 65%) 100%)`
                   }}
                 />
+                <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center whisper-animation">
+                  <Heart className="w-4 h-4 text-primary" />
+                </div>
               </div>
-              <div className="flex justify-between text-sm soul-text opacity-70">
-                <span>Struggling 😔</span>
-                <span>Peaceful 🌸</span>
+              <div className="flex justify-between text-base soul-text opacity-70 px-2">
+                <span className="flex items-center gap-2">😔 <span>Struggling</span></span>
+                <span className="flex items-center gap-2"><span>Peaceful</span> 🌸</span>
               </div>
-              <p className="text-center soul-text">
-                {emotionLevel < 30 ? "I'm here to listen and support you 💙" :
-                 emotionLevel < 70 ? "Let's find your inner balance together 🌱" :
-                 "Beautiful! Let's nurture this peace 🌸"}
-              </p>
+              <div className="text-center p-4 bg-primary/5 rounded-lg">
+                <p className="soul-text text-lg">
+                  {emotionLevel < 30 ? "I'm here to listen and support you 💙" :
+                   emotionLevel < 70 ? "Let's find your inner balance together 🌱" :
+                   "Beautiful! Let's nurture this peace 🌸"}
+                </p>
+              </div>
               
               {/* Animated Quiz Button */}
               {sliderTouched && (
-                <div className="pt-4 animate-fade-in">
+                <div className="pt-2 animate-fade-in">
                   <Button
                     onClick={() => setShowQuiz(true)}
-                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 transform hover:scale-105"
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 transform hover:scale-105 text-lg py-3"
                     size="lg"
                   >
-                    🧠 Quick Mood Check
+                    <span className="mr-2">🧠</span> Quick Mood Check
                   </Button>
                 </div>
               )}
             </div>
           </div>
         </Card>
-
-        {/* Action Buttons */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          <Card className="healing-card group cursor-pointer" onClick={handleVoiceCall}>
-            <div className="text-center space-y-4 p-4">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                <Mic className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-medium soul-text">Voice Session</h3>
-              <p className="soul-text opacity-70">
-                Speak freely and receive gentle, spoken guidance with AI that truly listens
-              </p>
-              <Button 
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300"
-                size="lg"
-              >
-                Start Voice Call
-              </Button>
-            </div>
-          </Card>
-
-          <Card className="healing-card group cursor-pointer" onClick={handleChat}>
-            <div className="text-center space-y-4 p-4">
-              <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                <MessageCircle className="w-8 h-8 text-secondary-foreground" />
-              </div>
-              <h3 className="text-xl font-medium soul-text">Text Support</h3>
-              <p className="soul-text opacity-70">
-                Share your thoughts through writing and receive wisdom-filled responses
-              </p>
-              <Button 
-                variant="outline"
-                className="w-full border-secondary text-secondary-foreground hover:bg-secondary/10 transition-all duration-300"
-                size="lg"
-              >
-                Begin Chat
-              </Button>
-            </div>
-          </Card>
-        </div>
-
-        {/* Trust & Safety Note */}
-        <div className="max-w-2xl mx-auto pt-8">
-          <p className="soul-text text-sm opacity-60 leading-relaxed">
-            This AI companion is designed to provide emotional support and spiritual wisdom. 
-            While deeply caring, it cannot replace professional medical or psychiatric care when needed. 
-            Your privacy is sacred to us.
-          </p>
-        </div>
       </div>
+
+      {/* Personal Footer */}
+      <footer className="relative z-10 w-full max-w-4xl mx-auto text-center space-y-4 pb-8 pt-16">
+        <div className="space-y-6">
+          {/* Made by credit */}
+          <p className="text-lg font-handwritten text-primary/80 tracking-wide">
+            Made by Omkar ❤️
+          </p>
+          
+          {/* Hope-giving tagline with subtle animation */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 rounded-lg animate-pulse opacity-50"></div>
+            <p className="relative soul-text text-base md:text-lg opacity-90 leading-relaxed px-6 py-4 max-w-2xl mx-auto">
+              "I wasn't able to afford a therapist during my hard times, but here's your free AI therapist — made by me to help Gen Z."
+            </p>
+          </div>
+        </div>
+      </footer>
 
       {/* Emotional Quiz Modal */}
       <EmotionalQuiz
