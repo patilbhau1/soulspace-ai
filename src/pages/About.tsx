@@ -32,7 +32,7 @@ const About = () => {
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-primary">Our Approach</h2>
               <p className="text-muted-foreground leading-relaxed">
-                We blend cutting-edge AI technology with timeless spiritual teachings from the Bhagavad Gita, 
+                We blend cutting-edge AI technology with timeless spiritual teachings from the **Bhagavad Gita**, 
                 creating responses that are both scientifically informed and deeply compassionate.
               </p>
               <p className="text-muted-foreground leading-relaxed">

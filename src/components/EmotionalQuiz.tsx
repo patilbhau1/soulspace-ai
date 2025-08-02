@@ -8,6 +8,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 interface QuizProps {
   isOpen: boolean;
   onClose: () => void;
+  onComplete: (summary: string) => void;
 }
 
 const questions = [
@@ -157,17 +158,37 @@ export const EmotionalQuiz = ({ isOpen, onClose }: QuizProps) => {
 
   const getResultMessage = () => {
     const avgScore = calculateScore();
+    const userAnswers: { question: string; answer: string }[] = [];
+
+    questions.forEach(q => {
+      const selectedOptionValue = answers[q.id];
+      if (selectedOptionValue) {
+        const selectedOption = q.options.find(opt => opt.value === selectedOptionValue);
+        if (selectedOption) {
+          userAnswers.push({
+            question: q.question,
+            answer: selectedOption.label
+          });
+        }
+      }
+    });
+
+    let summaryMessage = "";
     if (avgScore >= 4) {
+      summaryMessage = "I've completed the mood check and I'm feeling pretty good! Here's a summary of my responses:\n" + userAnswers.map(a => `- ${a.question}: ${a.answer}`).join("\n");
       return {
         title: "You're doing great! ✨",
         message: "Looks like you're doing okay today! Keep it up 😊",
-        action: "all-good"
+        action: "all-good",
+        summary: summaryMessage
       };
     } else {
+      summaryMessage = "I've completed the mood check and I'm feeling a bit low. Here's a summary of my responses:\n" + userAnswers.map(a => `- ${a.question}: ${a.answer}`).join("\n");
       return {
         title: "We're here for you 💙",
         message: "Hey, we're here for you. Let's talk. Our AI therapist is ready to listen and support you.",
-        action: "talk-to-ai"
+        action: "talk-to-ai",
+        summary: summaryMessage
       };
     }
   };
@@ -280,9 +301,9 @@ export const EmotionalQuiz = ({ isOpen, onClose }: QuizProps) => {
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                     size="lg"
                     onClick={() => {
+                      console.log("Talk to AI Therapist button clicked. Summary:", result.summary);
+                      onComplete(result.summary);
                       onClose();
-                      // Navigate to chat or trigger AI session
-                      console.log("Starting AI therapy session...");
                     }}
                   >
                     🤖 Talk to AI Therapist
@@ -291,7 +312,10 @@ export const EmotionalQuiz = ({ isOpen, onClose }: QuizProps) => {
                   <Button
                     className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground"
                     size="lg"
-                    onClick={onClose}
+                    onClick={() => {
+                      onComplete("");
+                      onClose();
+                    }}
                   >
                     ✨ Continue Your Day
                   </Button>

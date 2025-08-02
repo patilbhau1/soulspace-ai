@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Yoga from "./pages/Yoga";
 import Meditation from "./pages/Meditation";
-import Journal from "./pages/Journal";
+import { ChatPage } from "./pages/Chat";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -24,7 +24,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/yoga" element={<Yoga />} />
           <Route path="/meditation" element={<Meditation />} />
-          <Route path="/journal" element={<Journal />} />
+          <Route path="/chat" element={<ChatPage />} />
           <Route path="/login" element={<Login />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

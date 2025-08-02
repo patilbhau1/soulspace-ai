@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
@@ -18,6 +19,7 @@ export const SoulspaceWelcome = () => {
   const [emotionLevel, setEmotionLevel] = useState(50);
   const [sliderTouched, setSliderTouched] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,8 +34,16 @@ export const SoulspaceWelcome = () => {
   };
 
   const handleChat = () => {
-    // This will be connected to chat interface later
-    console.log("Starting chat session...");
+    navigate("/chat");
+  };
+
+  const handleMoodCheck = () => {
+    setShowQuiz(true);
+  };
+
+  const handleQuizComplete = (summary: string) => {
+    setShowQuiz(false);
+    navigate("/chat", { state: { initialMessage: summary } });
   };
 
   return (
@@ -115,8 +125,8 @@ export const SoulspaceWelcome = () => {
               {sliderTouched && (
                 <div className="pt-2 animate-fade-in">
                   <Button
-                    onClick={() => setShowQuiz(true)}
-                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 transform hover:scale-105 text-lg py-3"
+                    onClick={handleMoodCheck}
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 transform hover:scale-105 text-lg py-3 neon-button"
                     size="lg"
                   >
                     <span className="mr-2">🧠</span> Quick Mood Check
@@ -146,7 +156,8 @@ export const SoulspaceWelcome = () => {
       <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8 py-16">
         <h2 className="text-3xl font-light soul-text mb-8">Ready for deeper support?</h2>
         <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          <Card className="healing-card group cursor-pointer transform hover:scale-105 transition-all duration-300">
+          <Card className="healing-card group cursor-pointer transform hover:scale-105 transition-all duration-300 relative">
+            <div className="absolute top-2 right-2 text-xs px-2 py-1 bg-indigo-500 text-white rounded-full">Coming Soon</div>
             <div className="p-8 space-y-4" onClick={handleVoiceCall}>
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto group-hover:bg-primary/30 transition-colors duration-300">
                 <Mic className="w-8 h-8 text-primary" />
@@ -159,7 +170,7 @@ export const SoulspaceWelcome = () => {
           <Card className="healing-card group cursor-pointer transform hover:scale-105 transition-all duration-300">
             <div className="p-8 space-y-4" onClick={handleChat}>
               <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto group-hover:bg-secondary/30 transition-colors duration-300">
-                <MessageCircle className="w-8 h-8 text-secondary" />
+                <MessageCircle className="w-8 h-8 text-primary" />
               </div>
               <h3 className="text-xl font-medium soul-text">Chat Session</h3>
               <p className="soul-text opacity-70">Start a text conversation with our AI therapist</p>
@@ -190,6 +201,7 @@ export const SoulspaceWelcome = () => {
       <EmotionalQuiz
         isOpen={showQuiz}
         onClose={() => setShowQuiz(false)}
+        onComplete={handleQuizComplete}
       />
     </div>
     </div>

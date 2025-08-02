@@ -9,28 +9,32 @@ const Yoga = () => {
       sanskrit: "Tadasana",
       duration: "2-5 minutes",
       description: "Stand tall and grounded, connecting with your inner strength.",
-      benefits: ["Improves posture", "Builds confidence", "Centers the mind"]
+      benefits: ["Improves posture", "Builds confidence", "Centers the mind"],
+      videoLink: "https://youtu.be/5NxDs-ovJU8?si=hEcxQflCJ0qOBoJs"
     },
     {
       name: "Child's Pose",
       sanskrit: "Balasana",
       duration: "3-5 minutes",
       description: "A restorative pose that brings you back to yourself.",
-      benefits: ["Calms the nervous system", "Relieves stress", "Promotes introspection"]
+      benefits: ["Calms the nervous system", "Relieves stress", "Promotes introspection"],
+      videoLink: "https://youtu.be/zStvLHeRnVQ?si=VREEn8UPONQiMZxn"
     },
     {
       name: "Warrior II",
       sanskrit: "Virabhadrasana II",
       duration: "1-3 minutes each side",
       description: "Embrace your inner warrior with strength and grace.",
-      benefits: ["Builds strength", "Increases confidence", "Improves focus"]
+      benefits: ["Builds strength", "Increases confidence", "Improves focus"],
+      videoLink: "https://youtu.be/Mn6RSIRCV3w?si=UzGvfNMXapzAQ80I"
     },
     {
       name: "Lotus Pose",
       sanskrit: "Padmasana",
       duration: "5-20 minutes",
       description: "The classic meditation pose for deep spiritual connection.",
-      benefits: ["Enhances meditation", "Improves flexibility", "Calms the mind"]
+      benefits: ["Enhances meditation", "Improves flexibility", "Calms the mind"],
+      videoLink: "https://youtu.be/w_j4lnfRC38?si=aPyo3O6dJtBp302e"
     }
   ];
 
@@ -72,7 +76,7 @@ const Yoga = () => {
                   </ul>
                 </div>
                 
-                <Button className="w-full mt-4" variant="outline">
+                <Button className="w-full mt-4" variant="outline" onClick={() => window.open(pose.videoLink, '_blank')}>
                   Start Practice
                 </Button>
               </Card>
