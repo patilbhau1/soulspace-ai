@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
+import { EmotionalQuiz } from "@/components/EmotionalQuiz";
 import { Mic, MessageCircle, Heart, Sparkles } from "lucide-react";
 
 const spiritualQuotes = [
@@ -15,6 +16,8 @@ const spiritualQuotes = [
 export const SoulspaceWelcome = () => {
   const [currentQuote, setCurrentQuote] = useState(0);
   const [emotionLevel, setEmotionLevel] = useState(50);
+  const [sliderTouched, setSliderTouched] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -94,7 +97,10 @@ export const SoulspaceWelcome = () => {
                   min="0"
                   max="100"
                   value={emotionLevel}
-                  onChange={(e) => setEmotionLevel(Number(e.target.value))}
+                  onChange={(e) => {
+                    setEmotionLevel(Number(e.target.value));
+                    setSliderTouched(true);
+                  }}
                   className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer emotion-slider"
                   style={{
                     background: `linear-gradient(to right, hsl(0 60% 70%) 0%, hsl(45 70% 70%) 50%, hsl(150 25% 65%) 100%)`
@@ -102,14 +108,27 @@ export const SoulspaceWelcome = () => {
                 />
               </div>
               <div className="flex justify-between text-sm soul-text opacity-70">
-                <span>Struggling</span>
-                <span>Peaceful</span>
+                <span>Struggling 😔</span>
+                <span>Peaceful 🌸</span>
               </div>
               <p className="text-center soul-text">
                 {emotionLevel < 30 ? "I'm here to listen and support you 💙" :
                  emotionLevel < 70 ? "Let's find your inner balance together 🌱" :
                  "Beautiful! Let's nurture this peace 🌸"}
               </p>
+              
+              {/* Animated Quiz Button */}
+              {sliderTouched && (
+                <div className="pt-4 animate-fade-in">
+                  <Button
+                    onClick={() => setShowQuiz(true)}
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 transition-all duration-300 transform hover:scale-105"
+                    size="lg"
+                  >
+                    🧠 Quick Mood Check
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </Card>
@@ -163,6 +182,12 @@ export const SoulspaceWelcome = () => {
           </p>
         </div>
       </div>
+
+      {/* Emotional Quiz Modal */}
+      <EmotionalQuiz
+        isOpen={showQuiz}
+        onClose={() => setShowQuiz(false)}
+      />
     </div>
     </div>
   );
