@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Navigation from "@/components/Navigation";
+import logo from "@/assets/logo.png";
 import { EmotionalQuiz } from "@/components/EmotionalQuiz";
 import { Mic, MessageCircle, Heart, Sparkles } from "lucide-react";
 
@@ -71,7 +72,7 @@ export const SoulspaceWelcome = () => {
         <div className="space-y-6">
           <div className="flex items-center justify-center space-x-3 mb-8">
             <div className="w-20 h-20 rounded-full flex items-center justify-center whisper-animation">
-              <img src="src\assets\logo.png" className="object-fill" />
+              <img src={logo} alt="SoulSpace logo" className="object-fill" />
             </div>
             <h1 className="text-5xl md:text-7xl font-light text-foreground tracking-wide">
               Soul<span className="text-primary font-medium">Space</span>
