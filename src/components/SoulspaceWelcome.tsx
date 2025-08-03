@@ -70,8 +70,8 @@ export const SoulspaceWelcome = () => {
         {/* Logo/Branding */}
         <div className="space-y-6">
           <div className="flex items-center justify-center space-x-3 mb-8">
-            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center whisper-animation">
-              <Heart className="w-8 h-8 text-primary" />
+            <div className="w-20 h-20 rounded-full flex items-center justify-center whisper-animation">
+              <img src="src\assets\logo.png" className="object-fill" />
             </div>
             <h1 className="text-5xl md:text-7xl font-light text-foreground tracking-wide">
               Soul<span className="text-primary font-medium">Space</span>
@@ -105,9 +105,6 @@ export const SoulspaceWelcome = () => {
                     background: `linear-gradient(to right, hsl(0 60% 70%) 0%, hsl(45 70% 70%) 50%, hsl(150 25% 65%) 100%)`
                   }}
                 />
-                <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center whisper-animation">
-                  <Heart className="w-4 h-4 text-primary" />
-                </div>
               </div>
               <div className="flex justify-between text-base soul-text opacity-70 px-2">
                 <span className="flex items-center gap-2">😔 <span>Struggling</span></span>
@@ -184,7 +181,7 @@ export const SoulspaceWelcome = () => {
         <div className="space-y-6">
           {/* Made by credit */}
           <p className="text-lg font-handwritten text-primary/80 tracking-wide">
-            Made by Omkar ❤️
+            Made with 💖 by Omkar
           </p>
           
           {/* Hope-giving tagline with subtle animation */}
