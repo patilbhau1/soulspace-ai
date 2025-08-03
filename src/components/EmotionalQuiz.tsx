@@ -115,7 +115,7 @@ const questions = [
   }
 ];
 
-export const EmotionalQuiz = ({ isOpen, onClose }: QuizProps) => {
+export const EmotionalQuiz = ({ isOpen, onClose, onComplete }: QuizProps) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [showResults, setShowResults] = useState(false);

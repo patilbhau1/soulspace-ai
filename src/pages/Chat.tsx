@@ -35,17 +35,43 @@ Your goal is to be a safe, healing presence that combines modern psychological c
 });
 
 export const ChatPage = () => {
-  const [chat] = useState(() => model.startChat({
-    history: [],
-    generationConfig: {
-      maxOutputTokens: 1000,
-    },
-  }));
-  const [messages, setMessages] = useState<{ sender: 'user' | 'bot'; text: string }>([]);
+  const location = useLocation();
+  // Mood-check summary forwarded from the EmotionalQuiz modal (may be undefined)
+  const initialSummary = (location.state as any)?.initialMessage as string | undefined;
+
+  // Initialise the conversation with the summary as prior context so Gemini can
+  // tailor its responses. We add it as a "user" turn in the history so it is
+  // available for grounding, but we will still send it again to trigger the
+  // model's first reply.
+  const [chat] = useState(() =>
+    model.startChat({
+      history: initialSummary
+        ? [
+            {
+              role: 'user',
+              parts: [{ text: initialSummary }],
+            },
+          ]
+        : [],
+      generationConfig: {
+        maxOutputTokens: 1000,
+      },
+    })
+  );
+
+  const [messages, setMessages] = useState<{ sender: 'user' | 'bot'; text: string }[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  // We keep a ref to the ScrollArea root so we can find the internal viewport for scrolling.
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const location = useLocation();
+
+  // Scroll to bottom utility that finds the Radix viewport inside ScrollArea
+  const scrollToBottom = () => {
+    const viewport = scrollAreaRef.current?.querySelector('[data-radix-scroll-area-viewport]') as HTMLElement | null;
+    if (viewport) {
+      viewport.scrollTo({ top: viewport.scrollHeight, behavior: 'smooth' });
+    }
+  };
 
   const sendMessageToGemini = async (messageText: string, isInitial = false) => {
     const userMessage = { sender: 'user' as const, text: messageText };
@@ -63,16 +89,39 @@ export const ChatPage = () => {
       setMessages(prevMessages => [...prevMessages, { sender: 'bot' as const, text: 'Sorry, something went wrong.' }]);
     } finally {
       setIsLoading(false);
+      scrollToBottom();
     }
   };
 
   useEffect(() => {
-    if (location.state && location.state.initialMessage) {
-      sendMessageToGemini(location.state.initialMessage, true);
+    // If we have mood summary, query the model in the background without exposing
+    // the summary to the chat UI.
+    if (initialSummary && messages.length === 0) {
+      (async () => {
+        setIsLoading(true);
+        try {
+          // Prompt the model with a neutral opener; the injected system/context
+          // already contains the summary.
+          const result = await chat.sendMessage('The user is ready to begin the session.');
+          const response = await result.response;
+          const text = response.text();
+          setMessages([{ sender: 'bot', text }]);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setIsLoading(false);
+          scrollToBottom();
+        }
+      })();
     } else if (messages.length === 0) {
-      setMessages([{ sender: 'bot', text: 'Hi, I’m here for you. Before we begin, may I ask — are you here to talk today? I’ll wait until you’re ready.' }]);
+      setMessages([
+        {
+          sender: 'bot',
+          text: 'Hi, I’m here for you. Before we begin, may I ask — are you here to talk today? I’ll wait until you’re ready.',
+        },
+      ]);
     }
-  }, [location.state, messages.length]);
+  }, [initialSummary, messages.length]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -80,9 +129,7 @@ export const ChatPage = () => {
   };
 
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
-    }
+    scrollToBottom();
   }, [messages]);
 
   return (
